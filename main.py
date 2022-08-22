@@ -50,6 +50,7 @@ def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
 def get_shijian():
+  import http.client, urllib
   conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
   params = urllib.parse.urlencode({'key':'8e28ca9b1a867c12df147a5ceb031e55','city':'北京'})
   headers = {'Content-type':'application/x-www-form-urlencoded'}
