@@ -49,11 +49,20 @@ def get_wordo():
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
+def get_shijian():
+  import http.client, urllib
+  conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
+  params = urllib.parse.urlencode({'key':'8e28ca9b1a867c12df147a5ceb031e55','city':'重庆'})
+  headers = {'Content-type':'application/x-www-form-urlencoded'}
+  conn.request('POST','/worldtime/index',params,headers)
+  res = conn.getresponse()
+  data = res.read()
+  print(data.decode('utf-8'))
 
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {"weather":{"value":wea,"color":get_random_color()},"temperature":{"value":temperature,"color":get_random_color()},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(),"color":get_random_color()},"wordo":{"value":get_wordo(),"color":get_random_color()}}
+data = {"weather":{"value":wea,"color":get_random_color()},"temperature":{"value":temperature,"color":get_random_color()},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(),"color":get_random_color()},"wordo":{"value":get_wordo(),"color":get_random_color()},"shijian":{"value":get_shijian()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
