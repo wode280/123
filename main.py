@@ -24,9 +24,6 @@ def get_weather():
   weather = res['data']['list'][0]
   return weather['weather'], math.floor(weather['temp'])
 
-def get_random_color():
-  return "#%06x" % random.randint(0, 0xFFFFFF)
-
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
   return delta.days
@@ -37,11 +34,14 @@ def get_birthday():
     next = next.replace(year=next.year + 1)
   return (next - today).days
 
-def get_random_color():
-  return "#%06x" % random.randint(0, 0xFFFFFF)
-
 def get_words():
   words = requests.get("https://api.shadiao.pro/chp")
+  if words.status_code != 200:
+    return get_words()
+  return words.json()['data']['text']
+
+def get_wordo():
+  words = requests.get("https://api.shadiao.pro/pyq")
   if words.status_code != 200:
     return get_words()
   return words.json()['data']['text']
