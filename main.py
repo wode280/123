@@ -24,6 +24,9 @@ def get_weather():
   weather = res['data']['list'][0]
   return weather['weather'], math.floor(weather['temp'])
 
+def get_random_color():
+  return "#%06x" % random.randint(0, 0xFFFFFF)
+
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
   return delta.days
